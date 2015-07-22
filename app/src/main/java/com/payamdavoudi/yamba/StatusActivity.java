@@ -1,10 +1,8 @@
 package com.payamdavoudi.yamba;
 
 import android.app.Activity;
-import android.content.DialogInterface;
-import android.support.v7.app.ActionBarActivity;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,7 +11,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import static android.widget.Toast.makeText;
+import com.marakana.android.yamba.clientlib.YambaClient;
+import com.marakana.android.yamba.clientlib.YambaClientException;
 
 
 public class StatusActivity extends Activity implements OnClickListener {
@@ -30,6 +29,8 @@ public class StatusActivity extends Activity implements OnClickListener {
         editStatus = (EditText) findViewById(R.id.editText);
         buttonTweet = (Button) findViewById(R.id.buttonTweet);
         buttonTweet.setOnClickListener(this);
+
+
 
     }
 
@@ -59,6 +60,35 @@ public class StatusActivity extends Activity implements OnClickListener {
     public void onClick(View v) {
         String status = editStatus.getText().toString();
         /*Log.e(TAG, "onClicked with status : " + status);*/
-        makeText(StatusActivity.this, "salam payam", 5).show();
+       /* makeText(StatusActivity.this, "salam payam", 5).show();*/
+        /*PostTask a = new PostTask();
+        a.execute(status);*/
+
+        new PostTask().execute(status);
     }
+    private final class PostTask extends AsyncTask<String, Void, String>{
+
+        @Override
+        protected String doInBackground(String... params){
+            YambaClient yambaCloud = new YambaClient("student","password");
+            try{
+                yambaCloud.postStatus(params[0]);
+                return "Successfully posted";
+            }
+            catch (YambaClientException e){
+                e.printStackTrace();
+                return "Failed to post to yamba service";
+            }
+
+        }
+        @Override
+        protected void onPostExecute(String result){
+            super.onPostExecute(result);
+            Toast.makeText(StatusActivity.this,result,Toast.LENGTH_LONG).show();
+        }
+
+    }
+
+
+
 }
