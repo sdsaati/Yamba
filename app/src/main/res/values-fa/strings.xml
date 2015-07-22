@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">یامبا</string>
+
+    <string name="hello_world">سلام دنیا</string>
+    <string name="action_settings">تنظیمات</string>
+    <string name="buttonTweet">پست کن</string>
+    <string name="WhatsGoingOn">ببین چه خبره ؟!</string>
+</resources>
