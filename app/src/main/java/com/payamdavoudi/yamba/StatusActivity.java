@@ -1,17 +1,35 @@
 package com.payamdavoudi.yamba;
 
+import android.app.Activity;
+import android.content.DialogInterface;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import static android.widget.Toast.makeText;
 
 
-public class StatusActivity extends ActionBarActivity {
+public class StatusActivity extends Activity implements OnClickListener {
+
+    private EditText editStatus;
+    private Button buttonTweet;
+    private static final String TAG = "StatusActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        /*  my codes : */
         setContentView(R.layout.activity_status);
+        editStatus = (EditText) findViewById(R.id.editText);
+        buttonTweet = (Button) findViewById(R.id.buttonTweet);
+        buttonTweet.setOnClickListener(this);
 
     }
 
@@ -35,5 +53,12 @@ public class StatusActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onClick(View v) {
+        String status = editStatus.getText().toString();
+        /*Log.e(TAG, "onClicked with status : " + status);*/
+        makeText(StatusActivity.this, "salam payam", 5).show();
     }
 }
